@@ -1,17 +1,15 @@
-cmake_minimum_required (VERSION 2.8)
-project (CMakeHelloWorld)
+cmake_minimum_required(VERSION 2.8)	 # Проверка версии CMake.
+										# Если версия установленой программы
+										# старее указаной, произайдёт аварийный выход.
 
-#version number
-set (CMakeHelloWorld_VERSION_MAJOR 1)
-set (CMakeHelloWorld_VERSION_MINOR 0)
+project(hello_world)			# Название проекта
 
-#include the subdirectory containing our libs
-add_subdirectory (Hello)
-include_directories(Hello)
-#indicate the entry point for the executable
-add_executable (CMakeHelloWorld Hello HelloWorld.cpp)
+set(SOURCE_EXE Source/main.cpp)		# Установка переменной со списком исходников для исполняемого файла
 
-# Indicate which libraries to include during the link process.
-target_link_libraries (CMakeHelloWorld Hello)
+set(SOURCE_LIB Source/foo.cpp)			# Тоже самое, но для библиотеки
 
-install (TARGETS CMakeHelloWorld DESTINATION bin)
+add_library(foo STATIC ${SOURCE_LIB})	# Создание статической библиотеки с именем foo
+
+add_executable(main ${SOURCE_EXE})	# Создает исполняемый файл с именем main
+
+target_link_libraries(main foo)		# Линковка программы с библиотекой
